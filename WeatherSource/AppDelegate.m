@@ -2,11 +2,12 @@
 //  AppDelegate.m
 //  WeatherSource
 //
-//  Created by Tom Lawrence on 3/19/17.
+//  Created by Joy Kendall on 3/19/17.
 //  Copyright © 2017 Joy. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "Model/Wunderground.h"
 
 @interface AppDelegate ()
 
@@ -35,11 +36,32 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    NSLog(@"ApplicationWillEnterForeground");
+
+    
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    NSLog(@"ApplicationDidBecomeActive");
+    [Wunderground getCurrentConditions:@"Cambridge"
+                               inState:@"MA"
+                        withCompletion:^(NSDictionary *result, NSError *error) {
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"NewCurrentConditions" object:self userInfo:result];
+                        }];
+    
+    [Wunderground getHourlyForecast:@"Cambridge"
+                            inState:@"MA"
+                     withCompletion:^(NSDictionary *result, NSError *error) {
+                         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewHourlyForecast" object:self userInfo:result];
+                     }];
+    
+    [Wunderground getExtendedForecast:@"Cambridge"
+                              inState:@"MA"
+                       withCompletion:^(NSDictionary *result, NSError *error) {
+                           [[NSNotificationCenter defaultCenter] postNotificationName:@"NewExtendedForecast" object:self userInfo:result];
+                       }];    
 }
 
 
