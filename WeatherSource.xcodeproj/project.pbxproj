@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		E2560EFB1E7EFEA500494241 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560EFA1E7EFEA500494241 /* main.m */; };
 		E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560EFD1E7EFEA500494241 /* AppDelegate.m */; };
-		E2560F011E7EFEA500494241 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560F001E7EFEA500494241 /* ViewController.m */; };
+		E2560F011E7EFEA500494241 /* CurrentConditionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560F001E7EFEA500494241 /* CurrentConditionsVC.m */; };
 		E2560F041E7EFEA500494241 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2560F021E7EFEA500494241 /* Main.storyboard */; };
 		E2560F061E7EFEA500494241 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2560F051E7EFEA500494241 /* Assets.xcassets */; };
 		E2560F091E7EFEA500494241 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2560F071E7EFEA500494241 /* LaunchScreen.storyboard */; };
+		E2560F121E7F000A00494241 /* Wunderground.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560F111E7F000A00494241 /* Wunderground.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,12 +21,15 @@
 		E2560EFA1E7EFEA500494241 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E2560EFC1E7EFEA500494241 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E2560EFD1E7EFEA500494241 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E2560EFF1E7EFEA500494241 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		E2560F001E7EFEA500494241 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E2560EFF1E7EFEA500494241 /* CurrentConditionsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CurrentConditionsVC.h; sourceTree = "<group>"; };
+		E2560F001E7EFEA500494241 /* CurrentConditionsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CurrentConditionsVC.m; sourceTree = "<group>"; };
 		E2560F031E7EFEA500494241 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E2560F051E7EFEA500494241 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2560F081E7EFEA500494241 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2560F0A1E7EFEA500494241 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2560F111E7F000A00494241 /* Wunderground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Wunderground.m; path = Model/Wunderground.m; sourceTree = "<group>"; };
+		E2560F131E7F005E00494241 /* Wunderground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Wunderground.h; path = Model/Wunderground.h; sourceTree = "<group>"; };
+		E2560F151E7F00F500494241 /* WunderKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WunderKey.h; path = Model/WunderKey.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,14 +62,11 @@
 		E2560EF81E7EFEA500494241 /* WeatherSource */ = {
 			isa = PBXGroup;
 			children = (
-				E2560EFC1E7EFEA500494241 /* AppDelegate.h */,
-				E2560EFD1E7EFEA500494241 /* AppDelegate.m */,
-				E2560EFF1E7EFEA500494241 /* ViewController.h */,
-				E2560F001E7EFEA500494241 /* ViewController.m */,
+				E2560EFF1E7EFEA500494241 /* CurrentConditionsVC.h */,
+				E2560F001E7EFEA500494241 /* CurrentConditionsVC.m */,
+				E2560F141E7F006800494241 /* Model */,
 				E2560F021E7EFEA500494241 /* Main.storyboard */,
 				E2560F051E7EFEA500494241 /* Assets.xcassets */,
-				E2560F071E7EFEA500494241 /* LaunchScreen.storyboard */,
-				E2560F0A1E7EFEA500494241 /* Info.plist */,
 				E2560EF91E7EFEA500494241 /* Supporting Files */,
 			);
 			path = WeatherSource;
@@ -74,9 +75,23 @@
 		E2560EF91E7EFEA500494241 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E2560EFC1E7EFEA500494241 /* AppDelegate.h */,
+				E2560EFD1E7EFEA500494241 /* AppDelegate.m */,
+				E2560F071E7EFEA500494241 /* LaunchScreen.storyboard */,
+				E2560F0A1E7EFEA500494241 /* Info.plist */,
 				E2560EFA1E7EFEA500494241 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E2560F141E7F006800494241 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E2560F111E7F000A00494241 /* Wunderground.m */,
+				E2560F131E7F005E00494241 /* Wunderground.h */,
+				E2560F151E7F00F500494241 /* WunderKey.h */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,7 +165,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2560F011E7EFEA500494241 /* ViewController.m in Sources */,
+				E2560F011E7EFEA500494241 /* CurrentConditionsVC.m in Sources */,
+				E2560F121E7F000A00494241 /* Wunderground.m in Sources */,
 				E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */,
 				E2560EFB1E7EFEA500494241 /* main.m in Sources */,
 			);
