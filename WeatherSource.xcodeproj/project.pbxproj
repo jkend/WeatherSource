@@ -14,6 +14,8 @@
 		E2560F061E7EFEA500494241 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2560F051E7EFEA500494241 /* Assets.xcassets */; };
 		E2560F091E7EFEA500494241 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2560F071E7EFEA500494241 /* LaunchScreen.storyboard */; };
 		E2560F121E7F000A00494241 /* Wunderground.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560F111E7F000A00494241 /* Wunderground.m */; };
+		E26448AF1E8043D40050DAFF /* HourlyView.m in Sources */ = {isa = PBXBuildFile; fileRef = E26448AE1E8043D40050DAFF /* HourlyView.m */; };
+		E26448B11E8044040050DAFF /* HourlyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E26448B01E8044040050DAFF /* HourlyView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,9 @@
 		E2560F111E7F000A00494241 /* Wunderground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Wunderground.m; path = Model/Wunderground.m; sourceTree = "<group>"; };
 		E2560F131E7F005E00494241 /* Wunderground.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Wunderground.h; path = Model/Wunderground.h; sourceTree = "<group>"; };
 		E2560F151E7F00F500494241 /* WunderKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WunderKey.h; path = Model/WunderKey.h; sourceTree = "<group>"; };
+		E26448AD1E8043D40050DAFF /* HourlyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HourlyView.h; path = HourlyView/HourlyView.h; sourceTree = "<group>"; };
+		E26448AE1E8043D40050DAFF /* HourlyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HourlyView.m; path = HourlyView/HourlyView.m; sourceTree = "<group>"; };
+		E26448B01E8044040050DAFF /* HourlyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HourlyView.xib; path = HourlyView/HourlyView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +67,7 @@
 		E2560EF81E7EFEA500494241 /* WeatherSource */ = {
 			isa = PBXGroup;
 			children = (
+				E26448B21E8046390050DAFF /* HourlyView */,
 				E2560EFF1E7EFEA500494241 /* CurrentConditionsVC.h */,
 				E2560F001E7EFEA500494241 /* CurrentConditionsVC.m */,
 				E2560F141E7F006800494241 /* Model */,
@@ -92,6 +98,16 @@
 				E2560F151E7F00F500494241 /* WunderKey.h */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		E26448B21E8046390050DAFF /* HourlyView */ = {
+			isa = PBXGroup;
+			children = (
+				E26448AD1E8043D40050DAFF /* HourlyView.h */,
+				E26448AE1E8043D40050DAFF /* HourlyView.m */,
+				E26448B01E8044040050DAFF /* HourlyView.xib */,
+			);
+			name = HourlyView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2560F091E7EFEA500494241 /* LaunchScreen.storyboard in Resources */,
+				E26448B11E8044040050DAFF /* HourlyView.xib in Resources */,
 				E2560F061E7EFEA500494241 /* Assets.xcassets in Resources */,
 				E2560F041E7EFEA500494241 /* Main.storyboard in Resources */,
 			);
@@ -167,6 +184,7 @@
 			files = (
 				E2560F011E7EFEA500494241 /* CurrentConditionsVC.m in Sources */,
 				E2560F121E7F000A00494241 /* Wunderground.m in Sources */,
+				E26448AF1E8043D40050DAFF /* HourlyView.m in Sources */,
 				E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */,
 				E2560EFB1E7EFEA500494241 /* main.m in Sources */,
 			);
@@ -325,6 +343,7 @@
 				E2560F0F1E7EFEA500494241 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
