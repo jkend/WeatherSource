@@ -17,21 +17,21 @@
 @implementation Wunderground
 
 +(void) getCurrentConditions:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion {
-    NSLog(@"In getCurrentConditions");
+    //NSLog(@"In getCurrentConditions");
     NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%@/%@.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_CURRENT_CONDITION, state, ofCity ];
     
     [self getJSonResponse:queryString completion:completion];
 }
 
 +(void) getHourlyForecast:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion {
-        NSLog(@"In getHourly");
+    //    NSLog(@"In getHourly");
     NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%@/%@.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_HOURLY_FORECAST, state, ofCity ];
     
     [self getJSonResponse:queryString completion:completion];
 }
 
 +(void) getExtendedForecast:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion {
-     NSLog(@"In getExten ded");
+     //NSLog(@"In getExtended");
     NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%@/%@.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_EXTENDED_FORECAST, state, ofCity ];
     
     [self getJSonResponse:queryString completion:completion];
@@ -50,7 +50,7 @@
                                                     completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                         
                                                         if (!error) {
-                                                            NSLog(@"Got response, no error");
+                                                            
                                                             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
                                                             if (error) {
                                                                 NSLog(@"error parsing");
