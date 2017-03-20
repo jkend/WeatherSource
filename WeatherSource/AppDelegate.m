@@ -45,20 +45,22 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSLog(@"ApplicationDidBecomeActive");
-    [Wunderground getCurrentConditions:@"Cambridge"
-                               inState:@"MA"
+    NSString *currentCity = @"Cambridge";
+    NSString *currentState = @"MA";
+    [Wunderground getCurrentConditions:currentCity
+                               inState:currentState
                         withCompletion:^(NSDictionary *result, NSError *error) {
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"NewCurrentConditions" object:self userInfo:result];
                         }];
     
-    [Wunderground getHourlyForecast:@"Cambridge"
-                            inState:@"MA"
+    [Wunderground getHourlyForecast:currentCity
+                            inState:currentState
                      withCompletion:^(NSDictionary *result, NSError *error) {
                          [[NSNotificationCenter defaultCenter] postNotificationName:@"NewHourlyForecast" object:self userInfo:result];
                      }];
     
-    [Wunderground getExtendedForecast:@"Cambridge"
-                              inState:@"MA"
+    [Wunderground getExtendedForecast:currentCity
+                              inState:currentState
                        withCompletion:^(NSDictionary *result, NSError *error) {
                            [[NSNotificationCenter defaultCenter] postNotificationName:@"NewExtendedForecast" object:self userInfo:result];
                        }];    
