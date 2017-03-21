@@ -83,6 +83,7 @@
         
         hv.hour = [hour valueForKeyPath:@"FCTTIME.hour"];
         hv.temp = [hour valueForKeyPath:@"temp.english"];
+        hv.imageURL = [hour valueForKey:@"icon_url"];
         frameRect = hv.frame;
         frameRect.origin.x = scrollViewWidth;
         hv.frame = frameRect;
