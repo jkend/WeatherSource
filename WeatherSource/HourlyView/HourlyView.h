@@ -13,4 +13,5 @@
 
 @property (strong, nonatomic) NSString *hour;
 @property (strong, nonatomic) NSString *temp;
+@property (strong, nonatomic) NSString *imageURL;
 @end

@@ -7,10 +7,12 @@
 //
 
 #import "HourlyView.h"
+#import "../Utils/UIImage+Helpers.h"
 
 @interface HourlyView()
 @property (weak, nonatomic) IBOutlet UILabel *hourLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
 @end
 
@@ -29,6 +31,13 @@
     // kludge
     if (normalHour == 0) normalHour = 12;
     self.hourLabel.text = [NSString stringWithFormat:@"%d%@", normalHour, ampm];
+}
+
+-(void)setImageURL:(NSString *)imageURL {
+    _imageURL = imageURL;
+    [UIImage loadFromURL:[NSURL URLWithString:_imageURL] callback:^(UIImage *image) {
+        self.iconImageView.image = image;
+    }];
 }
 
 - (id)initWithFrame:(CGRect)aRect

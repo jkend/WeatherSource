@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HourlyView">
             <connections>
                 <outlet property="hourLabel" destination="J8c-FG-HvP" id="8kr-Wb-KQj"/>
+                <outlet property="iconImageView" destination="5PG-4K-s8a" id="UKT-6p-hbT"/>
                 <outlet property="tempLabel" destination="Sv9-st-JuH" id="gzv-BS-rK6"/>
                 <outlet property="view" destination="iN0-l3-epB" id="8J7-FC-LFL"/>
             </connections>
