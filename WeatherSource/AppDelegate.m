@@ -47,7 +47,14 @@
     NSLog(@"ApplicationDidBecomeActive");
     NSString *currentCity = @"Cambridge";
     NSString *currentState = @"MA";
-    [Wunderground getCurrentConditions:currentCity
+    
+    
+    [Wunderground getWeather:currentCity
+                            inState:currentState
+                     withCompletion:^(NSDictionary *result, NSError *error) {
+                         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewWeatherData" object:self userInfo:result];
+                     }];
+ /*   [Wunderground getCurrentConditions:currentCity
                                inState:currentState
                         withCompletion:^(NSDictionary *result, NSError *error) {
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"NewCurrentConditions" object:self userInfo:result];
@@ -63,7 +70,8 @@
                               inState:currentState
                        withCompletion:^(NSDictionary *result, NSError *error) {
                            [[NSNotificationCenter defaultCenter] postNotificationName:@"NewExtendedForecast" object:self userInfo:result];
-                       }];    
+                       }];   
+  */
 }
 
 

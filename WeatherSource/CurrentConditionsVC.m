@@ -7,8 +7,11 @@
 //
 
 #import "CurrentConditionsVC.h"
-#import "Model/Wunderground.h"
 #import "HourlyView/HourlyView.h"
+
+#import "Model/Wunderground.h"
+#import "Model/CurrentConditions.h"
+#import "Model/HourForecast.h"
 
 @interface CurrentConditionsVC ()
 @property (weak, nonatomic) IBOutlet UILabel *cityLabel;
@@ -21,16 +24,19 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 
-@property (nonatomic, strong) NSDictionary *currentConditions;
-@property (nonatomic, strong) NSDictionary *hourlyForecast;
+@property (nonatomic, strong) CurrentConditions *currentConditions;
+@property (nonatomic, strong) NSMutableArray<HourForecast *> *hourlyForecast;
+
 @end
+
+static const int NumberOfHourlyForecasts = 12;
 
 @implementation CurrentConditionsVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveCurrentConditions:) name:@"NewCurrentConditions" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveHourlyForecast:) name:@"NewHourlyForecast" object:nil];
+    self.hourlyForecast = [[NSMutableArray alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewWeatherData:) name:@"NewWeatherData" object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -38,56 +44,57 @@
 
 }
 
-
--(void) receiveCurrentConditions:(NSNotification *)notification {
-
-    self.currentConditions = notification.userInfo;
+-(void) receiveNewWeatherData:(NSNotification *)notification {
+    
+    self.currentConditions = [[CurrentConditions alloc] initWithData:notification.userInfo];
+    [self setupHourly:notification.userInfo];
     dispatch_async(dispatch_get_main_queue(), ^{
-         [self updateCC];
+        [self refreshUI];
     });
 }
 
--(void) receiveHourlyForecast:(NSNotification *)notification {
-    NSLog(@"Got hourly");
-    self.hourlyForecast = notification.userInfo;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self updateHourly];
-    });
+-(void)setupHourly:(NSDictionary *)dict {
+    [self.hourlyForecast removeAllObjects];
+    NSArray *rawHours = dict[WUNDERGROUND_HOURLY_KEY];
+    for (int hr = 0; hr < NumberOfHourlyForecasts; hr++) {
+        HourForecast *hourForecast = [[HourForecast alloc] initWithData:rawHours[hr]];
+        [self.hourlyForecast addObject:hourForecast];
+    }
 }
 
+
+-(void)refreshUI {
+    [self updateCC];
+    [self updateHourly];
+}
 
 -(void) updateCC {
-    self.cityLabel.text = [self.currentConditions valueForKeyPath:WUNDERGROUND_CC_CITY_PATH];
-    
-    // Careful, some of this data is NSNumber (as opposed to NSString)
-    self.currentTempLabel.text =  [NSString stringWithFormat:@"%@°", [self.currentConditions valueForKeyPath:WUNDERGROUND_CC_TEMP_PATH]];
+    self.cityLabel.text = self.currentConditions.city;
+    self.currentTempLabel.text =  [NSString stringWithFormat:@"%@°", self.currentConditions.temperature ];
     self.windsLabel.text = [NSString stringWithFormat:@"Winds: %@ %@",
-                            [self.currentConditions valueForKeyPath:WUNDERGROUND_CC_WIND_SPEED_PATH],
-                            [self.currentConditions valueForKeyPath:WUNDERGROUND_CC_WIND_DIRECTION_PATH]];
-    self.humidityLabel.text = [NSString stringWithFormat:@"Humidity: %@", [self.currentConditions valueForKeyPath:WUNDERGROUND_CC_HUMIDITY_PATH]];
-    self.descriptionLabel.text = [self.currentConditions valueForKeyPath:WUNDERGROUND_CC_DESCR_PATH];
+                            self.currentConditions.windDirection, self.currentConditions.windSpeed];
+    self.humidityLabel.text = [NSString stringWithFormat:@"Humidity: %@", self.currentConditions.humidity];
+    self.descriptionLabel.text = self.currentConditions.weatherDescription;
     
 }
 
 -(void) updateHourly {
     [self.hourlyScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    NSArray *hours = self.hourlyForecast[@"hourly_forecast"];
     int scrollViewWidth = 0;
     CGRect svFrame = self.hourlyScrollView.frame;
     NSLog(@"scrollview frame: %f %f %f %f", svFrame.origin.x, svFrame.origin.y, svFrame.size.width, svFrame.size.height);
-    for (int hr = 0; hr < 12; hr++) {
-        
-        NSDictionary *hour = hours[hr];
+    for (HourForecast *hour in self.hourlyForecast) {
         CGRect frameRect = CGRectMake(0, 0, 0.7 * self.hourlyScrollView.frame.size.height, self.hourlyScrollView.frame.size.height);
-        HourlyView *hv = [[HourlyView alloc] initWithFrame:frameRect];
         
-        hv.hour = [hour valueForKeyPath:@"FCTTIME.hour"];
-        hv.temp = [hour valueForKeyPath:@"temp.english"];
-        hv.imageURL = [hour valueForKey:@"icon_url"];
+        HourlyView *hv = [[HourlyView alloc] initWithFrame:frameRect];
+        hv.hour = hour.hour;
+        hv.temp = hour.temperature ;
+        hv.imageURL = hour.iconURLString;
+        
         frameRect = hv.frame;
         frameRect.origin.x = scrollViewWidth;
         hv.frame = frameRect;
-        NSLog(@"frame: %f %f %f %f", hv.frame.origin.x, hv.frame.origin.y, hv.frame.size.width, hv.frame.size.height);
+        //NSLog(@"frame: %f %f %f %f", hv.frame.origin.x, hv.frame.origin.y, hv.frame.size.width, hv.frame.size.height);
         [self.hourlyScrollView addSubview:hv];
         scrollViewWidth += hv.frame.size.width;
     }

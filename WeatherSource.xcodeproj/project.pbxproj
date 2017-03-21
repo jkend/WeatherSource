@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E2175FE41E8177F100E5CFB8 /* CurrentConditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2175FE31E8177F100E5CFB8 /* CurrentConditions.m */; };
+		E2175FE91E81819F00E5CFB8 /* HourForecast.m in Sources */ = {isa = PBXBuildFile; fileRef = E2175FE81E81819F00E5CFB8 /* HourForecast.m */; };
 		E21E585A1E80B2430008A8DC /* UIImage+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = E21E58591E80B2430008A8DC /* UIImage+Helpers.m */; };
 		E2560EFB1E7EFEA500494241 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560EFA1E7EFEA500494241 /* main.m */; };
 		E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560EFD1E7EFEA500494241 /* AppDelegate.m */; };
@@ -20,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E2175FE31E8177F100E5CFB8 /* CurrentConditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentConditions.m; path = Model/CurrentConditions.m; sourceTree = "<group>"; };
+		E2175FE61E81791000E5CFB8 /* CurrentConditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CurrentConditions.h; path = Model/CurrentConditions.h; sourceTree = "<group>"; };
+		E2175FE71E8180E800E5CFB8 /* HourForecast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HourForecast.h; path = Model/HourForecast.h; sourceTree = "<group>"; };
+		E2175FE81E81819F00E5CFB8 /* HourForecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HourForecast.m; path = Model/HourForecast.m; sourceTree = "<group>"; };
 		E21E58591E80B2430008A8DC /* UIImage+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Helpers.m"; path = "Utils/UIImage+Helpers.m"; sourceTree = "<group>"; };
 		E21E585B1E80B2BE0008A8DC /* UIImage+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+Helpers.h"; path = "Utils/UIImage+Helpers.h"; sourceTree = "<group>"; };
 		E2560EF61E7EFEA500494241 /* WeatherSource.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherSource.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,9 +112,13 @@
 		E2560F141E7F006800494241 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2175FE61E81791000E5CFB8 /* CurrentConditions.h */,
+				E2175FE31E8177F100E5CFB8 /* CurrentConditions.m */,
 				E2560F111E7F000A00494241 /* Wunderground.m */,
 				E2560F131E7F005E00494241 /* Wunderground.h */,
 				E2560F151E7F00F500494241 /* WunderKey.h */,
+				E2175FE71E8180E800E5CFB8 /* HourForecast.h */,
+				E2175FE81E81819F00E5CFB8 /* HourForecast.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -200,6 +210,8 @@
 				E2560F121E7F000A00494241 /* Wunderground.m in Sources */,
 				E26448AF1E8043D40050DAFF /* HourlyView.m in Sources */,
 				E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */,
+				E2175FE41E8177F100E5CFB8 /* CurrentConditions.m in Sources */,
+				E2175FE91E81819F00E5CFB8 /* HourForecast.m in Sources */,
 				E2560EFB1E7EFEA500494241 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

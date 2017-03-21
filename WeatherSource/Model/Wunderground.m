@@ -37,6 +37,12 @@
     [self getJSonResponse:queryString completion:completion];
 }
 
++(void) getWeather:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion {
+    NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%@/%@.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_CC_HOURLY_EXTENDED, state, ofCity ];
+    
+    [self getJSonResponse:queryString completion:completion];
+}
+
 +(void)getJSonResponse:(NSString *)queryString
          completion:(void (^)(NSDictionary *, NSError *))completion {
     
