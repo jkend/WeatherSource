@@ -24,6 +24,11 @@
 #define WUNDERGROUND_HOURLY_TEMP_PATH           @"temp.english"
 #define WUNDERGROUND_HOURLY_ICON_PATH           @"icon_url"
 
+#define WUNDERGROUND_EXTENDED_PATH              @"forecast.simpleforecast.forecastday"
+#define WUNDERGROUND_EXTENDED_DAY_PATH          @"date.weekday"
+#define WUNDERGROUND_EXTENDED_HIGHTEMP_PATH     @"high.fahrenheit"
+#define WUNDERGROUND_EXTENDED_LOWTEMP_PATH      @"low.fahrenheit"
+#define WUNDERGROUND_EXTENDED_ICON_PATH         @"icon_url"
 
 @interface Wunderground : NSObject
 
