@@ -8,12 +8,15 @@
 
 #import "CurrentConditionsVC.h"
 #import "HourlyView/HourlyView.h"
+#import "OutlookTableViewCell/OutlookTableViewCell.h"
 
 #import "Model/Wunderground.h"
 #import "Model/CurrentConditions.h"
 #import "Model/HourForecast.h"
+#import "Model/DayForecast.h"
 
 @interface CurrentConditionsVC ()
+// MARK: Outlets
 @property (weak, nonatomic) IBOutlet UILabel *cityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentTempLabel;
 @property (weak, nonatomic) IBOutlet UILabel *windsLabel;
@@ -23,19 +26,24 @@
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
+@property (weak, nonatomic) IBOutlet UITableView *extendedForecastTableView;
 
+// MARK: Model
 @property (nonatomic, strong) CurrentConditions *currentConditions;
 @property (nonatomic, strong) NSMutableArray<HourForecast *> *hourlyForecast;
-
+@property (nonatomic, strong) NSMutableArray<DayForecast *> *extendedForecast;
 @end
 
 static const int NumberOfHourlyForecasts = 12;
 
-@implementation CurrentConditionsVC
+@implementation CurrentConditionsVC 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.hourlyForecast = [[NSMutableArray alloc] init];
+    self.extendedForecast = [[NSMutableArray alloc] init];
+    [self.extendedForecastTableView registerNib:[UINib nibWithNibName:@"OutlookTableViewCell" bundle:nil] forCellReuseIdentifier:@"Outlook Cell"];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewWeatherData:) name:@"NewWeatherData" object:nil];
 }
 
@@ -44,15 +52,19 @@ static const int NumberOfHourlyForecasts = 12;
 
 }
 
+// MARK: Notification handler
 -(void) receiveNewWeatherData:(NSNotification *)notification {
     
     self.currentConditions = [[CurrentConditions alloc] initWithData:notification.userInfo];
     [self setupHourly:notification.userInfo];
+    [self setupExtended:notification.userInfo];
+    //NSLog(@"%@", [notification.userInfo valueForKeyPath:@"forecast.simpleforecast.forecastday"]);
     dispatch_async(dispatch_get_main_queue(), ^{
         [self refreshUI];
     });
 }
 
+// MARK: Update Model
 -(void)setupHourly:(NSDictionary *)dict {
     [self.hourlyForecast removeAllObjects];
     NSArray *rawHours = dict[WUNDERGROUND_HOURLY_KEY];
@@ -62,10 +74,20 @@ static const int NumberOfHourlyForecasts = 12;
     }
 }
 
+-(void)setupExtended:(NSDictionary *)dict {
+    [self.extendedForecast removeAllObjects];
+    NSArray *rawDays = [dict valueForKeyPath:WUNDERGROUND_EXTENDED_PATH];
+    for (NSDictionary *d in rawDays) {
+        DayForecast *dayForecast = [[DayForecast alloc] initWithData:d];
+        [self.extendedForecast addObject:dayForecast];
+    }
+}
 
+// MARK: Update UI
 -(void)refreshUI {
     [self updateCC];
     [self updateHourly];
+    [self.extendedForecastTableView reloadData];
 }
 
 -(void) updateCC {
@@ -75,7 +97,6 @@ static const int NumberOfHourlyForecasts = 12;
                             self.currentConditions.windDirection, self.currentConditions.windSpeed];
     self.humidityLabel.text = [NSString stringWithFormat:@"Humidity: %@", self.currentConditions.humidity];
     self.descriptionLabel.text = self.currentConditions.weatherDescription;
-    
 }
 
 -(void) updateHourly {
@@ -100,6 +121,27 @@ static const int NumberOfHourlyForecasts = 12;
     }
     [self.hourlyScrollView setContentSize:CGSizeMake(scrollViewWidth, self.hourlyScrollView.frame.size.height)];
     [self.hourlyScrollView layoutIfNeeded];
+}
+
+// MARK: UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.extendedForecast count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    OutlookTableViewCell *cell = [self.extendedForecastTableView dequeueReusableCellWithIdentifier:@"Outlook Cell"];
+    if (!cell) {
+        
+    }
+    cell.dayLabel.text = self.extendedForecast[indexPath.row].day;
+    cell.highLabel.text = self.extendedForecast[indexPath.row].highTemp;
+    cell.lowLabel.text = self.extendedForecast[indexPath.row].lowTemp;
+    cell.iconURL = self.extendedForecast[indexPath.row].iconURLString;
+    return cell;
 }
 
 @end

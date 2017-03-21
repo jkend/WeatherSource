@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CurrentConditionsVC : UIViewController
+@interface CurrentConditionsVC : UIViewController <UITableViewDataSource>
 
 
 @end

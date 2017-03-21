@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		E2175FE41E8177F100E5CFB8 /* CurrentConditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2175FE31E8177F100E5CFB8 /* CurrentConditions.m */; };
 		E2175FE91E81819F00E5CFB8 /* HourForecast.m in Sources */ = {isa = PBXBuildFile; fileRef = E2175FE81E81819F00E5CFB8 /* HourForecast.m */; };
+		E2175FEC1E8199DF00E5CFB8 /* DayForecast.m in Sources */ = {isa = PBXBuildFile; fileRef = E2175FEB1E8199DF00E5CFB8 /* DayForecast.m */; };
+		E2175FF01E81B9E100E5CFB8 /* OutlookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2175FEE1E81B9E100E5CFB8 /* OutlookTableViewCell.m */; };
+		E2175FF11E81B9E100E5CFB8 /* OutlookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2175FEF1E81B9E100E5CFB8 /* OutlookTableViewCell.xib */; };
 		E21E585A1E80B2430008A8DC /* UIImage+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = E21E58591E80B2430008A8DC /* UIImage+Helpers.m */; };
 		E2560EFB1E7EFEA500494241 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560EFA1E7EFEA500494241 /* main.m */; };
 		E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560EFD1E7EFEA500494241 /* AppDelegate.m */; };
@@ -26,6 +29,11 @@
 		E2175FE61E81791000E5CFB8 /* CurrentConditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CurrentConditions.h; path = Model/CurrentConditions.h; sourceTree = "<group>"; };
 		E2175FE71E8180E800E5CFB8 /* HourForecast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HourForecast.h; path = Model/HourForecast.h; sourceTree = "<group>"; };
 		E2175FE81E81819F00E5CFB8 /* HourForecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HourForecast.m; path = Model/HourForecast.m; sourceTree = "<group>"; };
+		E2175FEA1E81996100E5CFB8 /* DayForecast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DayForecast.h; path = Model/DayForecast.h; sourceTree = "<group>"; };
+		E2175FEB1E8199DF00E5CFB8 /* DayForecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DayForecast.m; path = Model/DayForecast.m; sourceTree = "<group>"; };
+		E2175FED1E81B9E100E5CFB8 /* OutlookTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OutlookTableViewCell.h; path = OutlookTableViewCell/OutlookTableViewCell.h; sourceTree = "<group>"; };
+		E2175FEE1E81B9E100E5CFB8 /* OutlookTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OutlookTableViewCell.m; path = OutlookTableViewCell/OutlookTableViewCell.m; sourceTree = "<group>"; };
+		E2175FEF1E81B9E100E5CFB8 /* OutlookTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OutlookTableViewCell.xib; path = OutlookTableViewCell/OutlookTableViewCell.xib; sourceTree = "<group>"; };
 		E21E58591E80B2430008A8DC /* UIImage+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Helpers.m"; path = "Utils/UIImage+Helpers.m"; sourceTree = "<group>"; };
 		E21E585B1E80B2BE0008A8DC /* UIImage+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+Helpers.h"; path = "Utils/UIImage+Helpers.h"; sourceTree = "<group>"; };
 		E2560EF61E7EFEA500494241 /* WeatherSource.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherSource.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +65,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E2175FF21E81B9EC00E5CFB8 /* OutlookTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				E2175FED1E81B9E100E5CFB8 /* OutlookTableViewCell.h */,
+				E2175FEE1E81B9E100E5CFB8 /* OutlookTableViewCell.m */,
+				E2175FEF1E81B9E100E5CFB8 /* OutlookTableViewCell.xib */,
+			);
+			name = OutlookTableViewCell;
+			sourceTree = "<group>";
+		};
 		E21E585C1E80B4290008A8DC /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +107,7 @@
 				E26448B21E8046390050DAFF /* HourlyView */,
 				E2560EFF1E7EFEA500494241 /* CurrentConditionsVC.h */,
 				E2560F001E7EFEA500494241 /* CurrentConditionsVC.m */,
+				E2175FF21E81B9EC00E5CFB8 /* OutlookTableViewCell */,
 				E2560F141E7F006800494241 /* Model */,
 				E2560F021E7EFEA500494241 /* Main.storyboard */,
 				E2560F051E7EFEA500494241 /* Assets.xcassets */,
@@ -119,6 +138,8 @@
 				E2560F151E7F00F500494241 /* WunderKey.h */,
 				E2175FE71E8180E800E5CFB8 /* HourForecast.h */,
 				E2175FE81E81819F00E5CFB8 /* HourForecast.m */,
+				E2175FEA1E81996100E5CFB8 /* DayForecast.h */,
+				E2175FEB1E8199DF00E5CFB8 /* DayForecast.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -195,6 +216,7 @@
 				E26448B11E8044040050DAFF /* HourlyView.xib in Resources */,
 				E2560F061E7EFEA500494241 /* Assets.xcassets in Resources */,
 				E2560F041E7EFEA500494241 /* Main.storyboard in Resources */,
+				E2175FF11E81B9E100E5CFB8 /* OutlookTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,10 +231,12 @@
 				E21E585A1E80B2430008A8DC /* UIImage+Helpers.m in Sources */,
 				E2560F121E7F000A00494241 /* Wunderground.m in Sources */,
 				E26448AF1E8043D40050DAFF /* HourlyView.m in Sources */,
+				E2175FEC1E8199DF00E5CFB8 /* DayForecast.m in Sources */,
 				E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */,
 				E2175FE41E8177F100E5CFB8 /* CurrentConditions.m in Sources */,
 				E2175FE91E81819F00E5CFB8 /* HourForecast.m in Sources */,
 				E2560EFB1E7EFEA500494241 /* main.m in Sources */,
+				E2175FF01E81B9E100E5CFB8 /* OutlookTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
