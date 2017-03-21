@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E21E585A1E80B2430008A8DC /* UIImage+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = E21E58591E80B2430008A8DC /* UIImage+Helpers.m */; };
 		E2560EFB1E7EFEA500494241 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560EFA1E7EFEA500494241 /* main.m */; };
 		E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560EFD1E7EFEA500494241 /* AppDelegate.m */; };
 		E2560F011E7EFEA500494241 /* CurrentConditionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560F001E7EFEA500494241 /* CurrentConditionsVC.m */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E21E58591E80B2430008A8DC /* UIImage+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Helpers.m"; path = "Utils/UIImage+Helpers.m"; sourceTree = "<group>"; };
+		E21E585B1E80B2BE0008A8DC /* UIImage+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+Helpers.h"; path = "Utils/UIImage+Helpers.h"; sourceTree = "<group>"; };
 		E2560EF61E7EFEA500494241 /* WeatherSource.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherSource.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2560EFA1E7EFEA500494241 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E2560EFC1E7EFEA500494241 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -48,6 +51,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E21E585C1E80B4290008A8DC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E21E58591E80B2430008A8DC /* UIImage+Helpers.m */,
+				E21E585B1E80B2BE0008A8DC /* UIImage+Helpers.h */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
 		E2560EED1E7EFEA500494241 = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +79,7 @@
 		E2560EF81E7EFEA500494241 /* WeatherSource */ = {
 			isa = PBXGroup;
 			children = (
+				E21E585C1E80B4290008A8DC /* Utils */,
 				E26448B21E8046390050DAFF /* HourlyView */,
 				E2560EFF1E7EFEA500494241 /* CurrentConditionsVC.h */,
 				E2560F001E7EFEA500494241 /* CurrentConditionsVC.m */,
@@ -183,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2560F011E7EFEA500494241 /* CurrentConditionsVC.m in Sources */,
+				E21E585A1E80B2430008A8DC /* UIImage+Helpers.m in Sources */,
 				E2560F121E7F000A00494241 /* Wunderground.m in Sources */,
 				E26448AF1E8043D40050DAFF /* HourlyView.m in Sources */,
 				E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */,
