@@ -16,12 +16,27 @@
 
 @implementation Wunderground
 
+// MARK: Weather queries, all params at once
++(void) getWeather:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion {
+    NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%@/%@.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_CC_HOURLY_EXTENDED, state, ofCity ];
+    
+    [self getJSonResponse:queryString completion:completion];
+}
+
+
++(void) getWeatherFromLatitude:(double)latitude andLongitude:(double)longitude withCompletion:(void (^)(NSDictionary *, NSError *))completion {
+    NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%f,%f.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_CC_HOURLY_EXTENDED,latitude, longitude ];
+    [self getJSonResponse:queryString completion:completion];
+}
+
+// MARK: methods specifying single feature
 +(void) getCurrentConditions:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion {
     //NSLog(@"In getCurrentConditions");
     NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%@/%@.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_CURRENT_CONDITION, state, ofCity ];
     
     [self getJSonResponse:queryString completion:completion];
 }
+
 
 +(void) getHourlyForecast:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion {
     //    NSLog(@"In getHourly");
@@ -37,12 +52,7 @@
     [self getJSonResponse:queryString completion:completion];
 }
 
-+(void) getWeather:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion {
-    NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%@/%@.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_CC_HOURLY_EXTENDED, state, ofCity ];
-    
-    [self getJSonResponse:queryString completion:completion];
-}
-
+// MARK: Send the query, handle response
 +(void)getJSonResponse:(NSString *)queryString
          completion:(void (^)(NSDictionary *, NSError *))completion {
     

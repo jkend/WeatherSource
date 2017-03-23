@@ -33,9 +33,10 @@
 @interface Wunderground : NSObject
 
 +(void) getWeather:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion;
++(void) getWeatherFromLatitude:(double)latitude andLongitude:(double)longitude withCompletion:(void (^)(NSDictionary *, NSError *))completion;
+
 +(void) getCurrentConditions:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 +(void) getHourlyForecast:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 +(void) getExtendedForecast:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion;
-
 
 @end
