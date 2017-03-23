@@ -95,16 +95,18 @@
     }
  
     self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-
+    self.locationManager.distanceFilter = 1000;
     return YES;
 }
 
 -(void)getQuickLocationUpdate {
+    NSLog(@"getQuickLocationUpdate");
     [self.locationManager requestWhenInUseAuthorization];
     
     // Request a location update
     [self.locationManager requestLocation];
     // Note: requestLocation may timeout and produce an error if authorization has not yet been granted by the user
+     //[self.locationManager stopUpdatingLocation];
 }
 
 -(void)shutdownLocationUpdates {
