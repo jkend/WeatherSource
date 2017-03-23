@@ -7,10 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import <CoreLocation/CoreLocation.h>
 #import "Model/Wunderground.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <CLLocationManagerDelegate>
+@property (strong, nonatomic) CLLocationManager *locationManager;
 
+@property (strong, nonatomic) NSTimer *locationUpdateTimer;
 @end
 
 @implementation AppDelegate
@@ -25,6 +28,7 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    [self shutdownLocationUpdates];
 }
 
 
@@ -45,39 +49,89 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSLog(@"ApplicationDidBecomeActive");
-    NSString *currentCity = @"Cambridge";
-    NSString *currentState = @"MA";
-    
-    
-    [Wunderground getWeather:currentCity
-                            inState:currentState
-                     withCompletion:^(NSDictionary *result, NSError *error) {
+
+    if ([self setupLocationManager]) {
+        NSLog(@"location manager ready");
+        [self getQuickLocationUpdate];
+        self.locationUpdateTimer = [NSTimer scheduledTimerWithTimeInterval: 6000.0
+                                                      target: self
+                                                    selector:@selector(getQuickLocationUpdate)
+                                                    userInfo: nil repeats:YES];
+    }
+    else {
+        // Do some hardcoded action
+        NSString *currentCity = @"Cambridge";
+        NSString *currentState = @"MA";
+        
+        [Wunderground getWeather:currentCity
+                         inState:currentState
+                  withCompletion:^(NSDictionary *result, NSError *error) {
                          [[NSNotificationCenter defaultCenter] postNotificationName:@"NewWeatherData" object:self userInfo:result];
                      }];
- /*   [Wunderground getCurrentConditions:currentCity
-                               inState:currentState
-                        withCompletion:^(NSDictionary *result, NSError *error) {
-                            [[NSNotificationCenter defaultCenter] postNotificationName:@"NewCurrentConditions" object:self userInfo:result];
-                        }];
-    
-    [Wunderground getHourlyForecast:currentCity
-                            inState:currentState
-                     withCompletion:^(NSDictionary *result, NSError *error) {
-                         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewHourlyForecast" object:self userInfo:result];
-                     }];
-    
-    [Wunderground getExtendedForecast:currentCity
-                              inState:currentState
-                       withCompletion:^(NSDictionary *result, NSError *error) {
-                           [[NSNotificationCenter defaultCenter] postNotificationName:@"NewExtendedForecast" object:self userInfo:result];
-                       }];   
-  */
-}
+    }
 
+}
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+// MARK: CLLocationManager setup
+-(BOOL)setupLocationManager {
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    
+    // User hasn't ever been asked to give location authorization
+    // Note: check for iOS 8 or later (this selector is new!)
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)] && status == kCLAuthorizationStatusNotDetermined) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    // User has denied location use (either for this app or for all apps
+    if (status == kCLAuthorizationStatusDenied || status == kCLAuthorizationStatusRestricted) {
+        NSLog(@"Location services denied");
+        return NO;
+    }
+ 
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
 
+    return YES;
+}
+
+-(void)getQuickLocationUpdate {
+    [self.locationManager requestWhenInUseAuthorization];
+    
+    // Request a location update
+    [self.locationManager requestLocation];
+    // Note: requestLocation may timeout and produce an error if authorization has not yet been granted by the user
+}
+
+-(void)shutdownLocationUpdates {
+    [self.locationManager stopUpdatingLocation];
+    [self.locationUpdateTimer invalidate];
+}
+
+// MARK: CLLocationManager Delegate Methods
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    // most recent location is last
+    CLLocation *loc = [locations lastObject];
+    
+    CLLocationDegrees latitude = loc.coordinate.latitude;
+    CLLocationDegrees longitude = loc.coordinate.longitude;
+    NSLog(@"%f, %f", latitude, longitude);
+    [Wunderground getWeatherFromLatitude:latitude
+                            andLongitude:longitude
+                          withCompletion:^(NSDictionary *result, NSError *error) {
+                              [[NSNotificationCenter defaultCenter] postNotificationName:@"NewWeatherData" object:self userInfo:result];
+                          }];
+
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"failed!");
+    [self shutdownLocationUpdates];
+}
 @end
