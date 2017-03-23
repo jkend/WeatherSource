@@ -21,17 +21,21 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentTempLabel;
 @property (weak, nonatomic) IBOutlet UILabel *windsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *humidityLabel;
-@property (weak, nonatomic) IBOutlet UILabel *highTempLabel;
-@property (weak, nonatomic) IBOutlet UILabel *lowTempLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *todayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *todaysHighLabel;
+@property (weak, nonatomic) IBOutlet UILabel *todaysLowLabel;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *hourlyScrollView;
 @property (weak, nonatomic) IBOutlet UITableView *extendedForecastTableView;
+
+@property (weak, nonatomic)  NSLayoutConstraint *tvHeightConstraint;
 
 // MARK: Model
 @property (nonatomic, strong) CurrentConditions *currentConditions;
 @property (nonatomic, strong) NSMutableArray<HourForecast *> *hourlyForecast;
 @property (nonatomic, strong) NSMutableArray<DayForecast *> *extendedForecast;
+@property (nonatomic, strong) DayForecast *todayForecast;
 @end
 
 static const int NumberOfHourlyForecasts = 12;
@@ -40,6 +44,8 @@ static const int NumberOfHourlyForecasts = 12;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Was trying to use this constraint to get the scrollview to scroll, but no luck so far!
+    self.tvHeightConstraint = [NSLayoutConstraint constraintWithItem:self.extendedForecastTableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:0];
     self.hourlyForecast = [[NSMutableArray alloc] init];
     self.extendedForecast = [[NSMutableArray alloc] init];
     [self.extendedForecastTableView registerNib:[UINib nibWithNibName:@"OutlookTableViewCell" bundle:nil] forCellReuseIdentifier:@"Outlook Cell"];
@@ -77,8 +83,10 @@ static const int NumberOfHourlyForecasts = 12;
 -(void)setupExtended:(NSDictionary *)dict {
     [self.extendedForecast removeAllObjects];
     NSArray *rawDays = [dict valueForKeyPath:WUNDERGROUND_EXTENDED_PATH];
-    for (NSDictionary *d in rawDays) {
-        DayForecast *dayForecast = [[DayForecast alloc] initWithData:d];
+    self.todayForecast = [[DayForecast alloc] initWithData:[rawDays firstObject]];
+    for (int dInd = 1; dInd < [rawDays count]; dInd++) {
+        NSDictionary *dict = rawDays[dInd];
+        DayForecast *dayForecast = [[DayForecast alloc] initWithData:dict];
         [self.extendedForecast addObject:dayForecast];
     }
 }
@@ -97,13 +105,17 @@ static const int NumberOfHourlyForecasts = 12;
                             self.currentConditions.windDirection, self.currentConditions.windSpeed];
     self.humidityLabel.text = [NSString stringWithFormat:@"Humidity: %@", self.currentConditions.humidity];
     self.descriptionLabel.text = self.currentConditions.weatherDescription;
+    
+    self.todayLabel.text = [NSString stringWithFormat:@"Today  %@", self.todayForecast.day];
+    self.todaysHighLabel.text = self.todayForecast.highTemp;
+    self.todaysLowLabel.text = self.todayForecast.lowTemp;
 }
 
 -(void) updateHourly {
     [self.hourlyScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     int scrollViewWidth = 0;
-    CGRect svFrame = self.hourlyScrollView.frame;
-    NSLog(@"scrollview frame: %f %f %f %f", svFrame.origin.x, svFrame.origin.y, svFrame.size.width, svFrame.size.height);
+    //CGRect svFrame = self.hourlyScrollView.frame;
+    //NSLog(@"scrollview frame: %f %f %f %f", svFrame.origin.x, svFrame.origin.y, svFrame.size.width, svFrame.size.height);
     for (HourForecast *hour in self.hourlyForecast) {
         CGRect frameRect = CGRectMake(0, 0, 0.7 * self.hourlyScrollView.frame.size.height, self.hourlyScrollView.frame.size.height);
         
