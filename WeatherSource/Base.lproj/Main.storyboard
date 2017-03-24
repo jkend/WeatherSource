@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -128,14 +130,27 @@
                                     <constraint firstItem="XZS-z6-btJ" firstAttribute="leading" secondItem="sof-yv-Tot" secondAttribute="leading" id="vhO-2L-7GH"/>
                                 </constraints>
                             </scrollView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NRC-pd-saB">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="Other Cities" id="Zzf-7c-lbo">
+                                        <connections>
+                                            <segue destination="jkB-PK-xIj" kind="presentation" id="j6J-br-XOX"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="sof-yv-Tot" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="1En-6O-bnm"/>
                             <constraint firstItem="sof-yv-Tot" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="7zO-e1-bhF"/>
+                            <constraint firstItem="NRC-pd-saB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="N4s-xU-SrU"/>
                             <constraint firstItem="XZS-z6-btJ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="PoO-b2-zYv"/>
                             <constraint firstAttribute="trailing" secondItem="sof-yv-Tot" secondAttribute="trailing" id="iHE-23-3wS"/>
+                            <constraint firstAttribute="trailing" secondItem="NRC-pd-saB" secondAttribute="trailing" id="rAa-7f-wug"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="sof-yv-Tot" secondAttribute="bottom" id="s0u-NS-pIx"/>
+                            <constraint firstAttribute="bottom" secondItem="NRC-pd-saB" secondAttribute="bottom" id="yqO-nK-Txi"/>
                         </constraints>
                     </view>
                     <connections>
@@ -154,6 +169,69 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140" y="138.98050974512745"/>
+        </scene>
+        <!--Saved Cities TableVC-->
+        <scene sceneID="M8N-Re-2Vl">
+            <objects>
+                <tableViewController id="jkB-PK-xIj" customClass="SavedCitiesTableVC" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="77" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ari-Oz-3Y6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CityCell" rowHeight="77" id="Fsc-oj-QWD" customClass="CityTableViewCell">
+                                <rect key="frame" x="0.0" y="28" width="375" height="77"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fsc-oj-QWD" id="Tq3-xs-6cj">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="76"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="San Francisco" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I4a-5s-K4B">
+                                            <rect key="frame" x="8" y="24.5" width="153.5" height="28"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qL-al-pvb">
+                                            <rect key="frame" x="323.5" y="13.5" width="43.5" height="48.5"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="41"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WXr-Ca-OjZ">
+                                            <rect key="frame" x="241.5" y="10" width="56.5" height="56.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="WXr-Ca-OjZ" secondAttribute="height" multiplier="1:1" id="LqR-BV-cif"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="3qL-al-pvb" secondAttribute="trailing" id="Fnx-zb-siw"/>
+                                        <constraint firstItem="WXr-Ca-OjZ" firstAttribute="top" secondItem="Tq3-xs-6cj" secondAttribute="topMargin" constant="2" id="LwV-MI-7SC"/>
+                                        <constraint firstItem="I4a-5s-K4B" firstAttribute="centerY" secondItem="Tq3-xs-6cj" secondAttribute="centerY" id="R49-k2-KfV"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="WXr-Ca-OjZ" secondAttribute="bottom" constant="2" id="bDe-Mv-fQk"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="I4a-5s-K4B" secondAttribute="leading" id="c10-BW-EZI"/>
+                                        <constraint firstItem="WXr-Ca-OjZ" firstAttribute="centerY" secondItem="Tq3-xs-6cj" secondAttribute="centerY" id="dYV-oe-mry"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="WXr-Ca-OjZ" secondAttribute="trailing" constant="69" id="dyt-RW-yB6"/>
+                                        <constraint firstItem="3qL-al-pvb" firstAttribute="centerY" secondItem="Tq3-xs-6cj" secondAttribute="centerY" id="eiv-40-3EY"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cityLabel" destination="I4a-5s-K4B" id="s8k-dn-jBC"/>
+                                    <outlet property="conditionsImageView" destination="WXr-Ca-OjZ" id="Ml2-MO-R5N"/>
+                                    <outlet property="tempLabel" destination="3qL-al-pvb" id="clF-S7-97i"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="jkB-PK-xIj" id="ibk-NZ-HNf"/>
+                            <outlet property="delegate" destination="jkB-PK-xIj" id="Zz5-Qm-pLp"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DT4-t9-XWg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1040.8" y="143.47826086956522"/>
         </scene>
     </scenes>
 </document>
