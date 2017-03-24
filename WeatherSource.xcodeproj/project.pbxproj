@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E20D5D701E85A9D400A61C78 /* SavedCitiesTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E20D5D6F1E85A9D400A61C78 /* SavedCitiesTableVC.m */; };
+		E20D5D731E85AE0A00A61C78 /* CityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E20D5D721E85AE0A00A61C78 /* CityTableViewCell.m */; };
 		E2175FE41E8177F100E5CFB8 /* CurrentConditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E2175FE31E8177F100E5CFB8 /* CurrentConditions.m */; };
 		E2175FE91E81819F00E5CFB8 /* HourForecast.m in Sources */ = {isa = PBXBuildFile; fileRef = E2175FE81E81819F00E5CFB8 /* HourForecast.m */; };
 		E2175FEC1E8199DF00E5CFB8 /* DayForecast.m in Sources */ = {isa = PBXBuildFile; fileRef = E2175FEB1E8199DF00E5CFB8 /* DayForecast.m */; };
@@ -22,9 +24,14 @@
 		E2560F121E7F000A00494241 /* Wunderground.m in Sources */ = {isa = PBXBuildFile; fileRef = E2560F111E7F000A00494241 /* Wunderground.m */; };
 		E26448AF1E8043D40050DAFF /* HourlyView.m in Sources */ = {isa = PBXBuildFile; fileRef = E26448AE1E8043D40050DAFF /* HourlyView.m */; };
 		E26448B11E8044040050DAFF /* HourlyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E26448B01E8044040050DAFF /* HourlyView.xib */; };
+		E2C872EF1E845793008CF24B /* WeatherDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C872EE1E845793008CF24B /* WeatherDataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E20D5D6E1E85A9D400A61C78 /* SavedCitiesTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedCitiesTableVC.h; sourceTree = "<group>"; };
+		E20D5D6F1E85A9D400A61C78 /* SavedCitiesTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedCitiesTableVC.m; sourceTree = "<group>"; };
+		E20D5D711E85AE0A00A61C78 /* CityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CityTableViewCell.h; path = CityTableViewCell/CityTableViewCell.h; sourceTree = "<group>"; };
+		E20D5D721E85AE0A00A61C78 /* CityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CityTableViewCell.m; path = CityTableViewCell/CityTableViewCell.m; sourceTree = "<group>"; };
 		E2175FE31E8177F100E5CFB8 /* CurrentConditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentConditions.m; path = Model/CurrentConditions.m; sourceTree = "<group>"; };
 		E2175FE61E81791000E5CFB8 /* CurrentConditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CurrentConditions.h; path = Model/CurrentConditions.h; sourceTree = "<group>"; };
 		E2175FE71E8180E800E5CFB8 /* HourForecast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HourForecast.h; path = Model/HourForecast.h; sourceTree = "<group>"; };
@@ -52,6 +59,8 @@
 		E26448AD1E8043D40050DAFF /* HourlyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HourlyView.h; path = HourlyView/HourlyView.h; sourceTree = "<group>"; };
 		E26448AE1E8043D40050DAFF /* HourlyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HourlyView.m; path = HourlyView/HourlyView.m; sourceTree = "<group>"; };
 		E26448B01E8044040050DAFF /* HourlyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HourlyView.xib; path = HourlyView/HourlyView.xib; sourceTree = "<group>"; };
+		E2C872ED1E845776008CF24B /* WeatherDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WeatherDataManager.h; path = Model/WeatherDataManager.h; sourceTree = "<group>"; };
+		E2C872EE1E845793008CF24B /* WeatherDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeatherDataManager.m; path = Model/WeatherDataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +74,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E20D5D741E85AE1000A61C78 /* CityTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				E20D5D711E85AE0A00A61C78 /* CityTableViewCell.h */,
+				E20D5D721E85AE0A00A61C78 /* CityTableViewCell.m */,
+			);
+			name = CityTableViewCell;
+			sourceTree = "<group>";
+		};
 		E2175FF21E81B9EC00E5CFB8 /* OutlookTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +125,9 @@
 				E26448B21E8046390050DAFF /* HourlyView */,
 				E2560EFF1E7EFEA500494241 /* CurrentConditionsVC.h */,
 				E2560F001E7EFEA500494241 /* CurrentConditionsVC.m */,
+				E20D5D6E1E85A9D400A61C78 /* SavedCitiesTableVC.h */,
+				E20D5D6F1E85A9D400A61C78 /* SavedCitiesTableVC.m */,
+				E20D5D741E85AE1000A61C78 /* CityTableViewCell */,
 				E2175FF21E81B9EC00E5CFB8 /* OutlookTableViewCell */,
 				E2560F141E7F006800494241 /* Model */,
 				E2560F021E7EFEA500494241 /* Main.storyboard */,
@@ -131,6 +152,8 @@
 		E2560F141E7F006800494241 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2C872ED1E845776008CF24B /* WeatherDataManager.h */,
+				E2C872EE1E845793008CF24B /* WeatherDataManager.m */,
 				E2175FE61E81791000E5CFB8 /* CurrentConditions.h */,
 				E2175FE31E8177F100E5CFB8 /* CurrentConditions.m */,
 				E2560F111E7F000A00494241 /* Wunderground.m */,
@@ -227,15 +250,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E20D5D701E85A9D400A61C78 /* SavedCitiesTableVC.m in Sources */,
 				E2560F011E7EFEA500494241 /* CurrentConditionsVC.m in Sources */,
 				E21E585A1E80B2430008A8DC /* UIImage+Helpers.m in Sources */,
 				E2560F121E7F000A00494241 /* Wunderground.m in Sources */,
 				E26448AF1E8043D40050DAFF /* HourlyView.m in Sources */,
+				E2C872EF1E845793008CF24B /* WeatherDataManager.m in Sources */,
 				E2175FEC1E8199DF00E5CFB8 /* DayForecast.m in Sources */,
 				E2560EFE1E7EFEA500494241 /* AppDelegate.m in Sources */,
 				E2175FE41E8177F100E5CFB8 /* CurrentConditions.m in Sources */,
 				E2175FE91E81819F00E5CFB8 /* HourForecast.m in Sources */,
 				E2560EFB1E7EFEA500494241 /* main.m in Sources */,
+				E20D5D731E85AE0A00A61C78 /* CityTableViewCell.m in Sources */,
 				E2175FF01E81B9E100E5CFB8 /* OutlookTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
