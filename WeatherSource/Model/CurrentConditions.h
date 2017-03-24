@@ -15,6 +15,7 @@
 @property (nonatomic, strong, readonly) NSString *windDirection;
 @property (nonatomic, strong, readonly) NSString *windSpeed;
 @property (nonatomic, strong, readonly) NSString *humidity;
+@property (nonatomic, strong, readonly) NSString *iconURLString;
 
 - (id)initWithData:(NSDictionary *)dict;
 @end

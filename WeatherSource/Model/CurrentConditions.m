@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSString *windDirection;
 @property (nonatomic, strong) NSString *windSpeed;
 @property (nonatomic, strong) NSString *humidity;
-
+@property (nonatomic, strong) NSString *iconURLString;
 @end
 
 @implementation CurrentConditions
@@ -33,6 +33,7 @@
         self.windDirection = [dict valueForKeyPath:WUNDERGROUND_CC_WIND_DIRECTION_PATH];
         self.humidity = [dict valueForKeyPath:WUNDERGROUND_CC_HUMIDITY_PATH];
         self.weatherDescription = [dict valueForKeyPath:WUNDERGROUND_CC_DESCR_PATH];
+        self.iconURLString = [dict valueForKeyPath:WUNDERGROUND_CC_ICONURL_PATH];
     }
     return self;
     

@@ -28,6 +28,7 @@ static const int NumberOfHourlyForecasts = 12;
     return _allCities;
 }
 
+// MARK: Returning the Singleton
 + (instancetype)sharedManager {
     static WeatherDataManager *sharedInstance = nil;
     static dispatch_once_t onceToken; // onceToken = 0
@@ -39,6 +40,8 @@ static const int NumberOfHourlyForecasts = 12;
     return sharedInstance;
 }
 
+// MARK: Weather for the active city
+// And "active" here means, the one being displayed in the main view controller
 - (CurrentConditions *)getActiveCurrentConditions {
     return [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.current", self.activeCityKey]];
 }
@@ -53,6 +56,19 @@ static const int NumberOfHourlyForecasts = 12;
     return [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.today", self.activeCityKey]] ;
 }
 
+- (NSUInteger)getSavedCitiesCount {
+    return [self.allCities count];
+}
+
+- (NSArray *)getSavedCities {
+    return [self.allCities allKeys];
+}
+
+- (CurrentConditions *)getCurrentConditionsForCity:(NSString *)key {
+    return [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.current", key]];
+}
+
+// MARK: NSNotification handler
 -(void) receiveNewWeatherData:(NSNotification *)notification {
     NSLog(@"WM receiving weather data, object = %@", notification.object);
     NSString *key = notification.object;

@@ -21,8 +21,10 @@
 - (NSArray<HourForecast *> *) getActiveHourly;
 - (DayForecast *) getActiveTodayForecast;
 
+- (NSUInteger)getSavedCitiesCount;
+- (NSArray *)getSavedCities;
 
-//- (CurrentConditions *)getCurrentConditionsForCity:(NSString *)city andState:(NSString *)state;
+- (CurrentConditions *)getCurrentConditionsForCity:(NSString *)key;
 //- (NSArray *)getHourlyForCity:(NSString *)city andState:(NSString *)state;
 //- (NSArray *)getForecastForCity:(NSString *)city andState:(NSString *)state;
 @end

@@ -18,6 +18,7 @@
 #define WUNDERGROUND_CC_WIND_SPEED_PATH         @"current_observation.wind_mph"
 #define WUNDERGROUND_CC_TEMP_PATH               @"current_observation.temp_f"
 #define WUNDERGROUND_CC_DESCR_PATH              @"current_observation.weather"
+#define WUNDERGROUND_CC_ICONURL_PATH            @"current_observation.icon_url"
 
 #define WUNDERGROUND_HOURLY_KEY                 @"hourly_forecast"
 #define WUNDERGROUND_HOURLY_HOUR_PATH           @"FCTTIME.hour"
