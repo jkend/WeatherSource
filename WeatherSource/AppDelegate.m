@@ -29,6 +29,7 @@
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     [self shutdownLocationUpdates];
+    [self saveLastCityViewed];
 }
 
 
@@ -50,7 +51,9 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     NSLog(@"ApplicationDidBecomeActive");
 
-    if ([self setupLocationManager]) {
+    // get conditions from our current location, if we're allowed
+    BOOL canUseLocation = [self setupLocationManager];
+    if (canUseLocation) {
         NSLog(@"location manager ready");
         [self getQuickLocationUpdate];
         self.locationUpdateTimer = [NSTimer scheduledTimerWithTimeInterval: 6000.0
@@ -58,22 +61,62 @@
                                                     selector:@selector(getQuickLocationUpdate)
                                                     userInfo: nil repeats:YES];
     }
-    else {
-        // Do some hardcoded action
-        NSString *currentCity = @"Cambridge";
-        NSString *currentState = @"MA";
-        
-        [Wunderground getWeather:currentCity
-                         inState:currentState
-                  withCompletion:^(NSDictionary *result, NSError *error) {
-                         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewWeatherData" object:self userInfo:result];
-                     }];
+    
+    // load any saved cities
+    NSArray *savedCities = [self loadFavoriteCities];
+    if ([savedCities count] > 0) {
+        for (NSString *savedCity in savedCities) {
+            [self getWeatherInfoForCityFromKey:savedCity];
+        }
     }
-
+    // load the last city we were looking at, if any
+    NSString *lastCityViewed = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastCityViewed"];
+    if (!lastCityViewed  && !canUseLocation) {
+        lastCityViewed = @"Cambridge/MA";
+    }
+    [self getWeatherInfoForCityFromKey:lastCityViewed];
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+// MARK: saving and loading "favorite" cities
+-(NSArray *)loadFavoriteCities {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *favCities = [defaults objectForKey:@"favoriteCities"];
+    if (!favCities) {
+        // just for dev!
+        return @[@"Seattle/WA", @"New_York/NY", @"Cambridge/MA"];
+    }
+    return favCities;
+}
+
+-(void)saveLastCityViewed {
+    // NSString *cityViewed = [[WeatherManager sharedManager] activeCityKey];
+    // [[NSUserDefaults standardDefaults] setObject:activeCityKey forKey:@"lastCityViewed"];
+}
+
+-(void)cityAndStateFromKey:(NSString *)key toCity:(NSString **)city andState:(NSString **)state {
+    NSArray *items = [key componentsSeparatedByString:@"/"];
+    *city = [items objectAtIndex:0];
+    *state = [items objectAtIndex:1];
+}
+
+-(void)getWeatherInfoForCityFromKey:(NSString *)cityKey {
+    NSString *city = nil;
+    NSString *state = nil;
+    [self cityAndStateFromKey:cityKey toCity:&city andState:&state];
+    NSLog(@"getWeatherInfoForCityFromKey, city = %@ state = %@ key = %@", city, state, cityKey);
+    if (city.length > 1 && state.length == 2) {
+        [Wunderground getWeather:city
+                         inState:state
+                  withCompletion:^(NSDictionary *result, NSError *error) {
+                      //[[WeatherManager sharedManager] addWeather:userInfo.result forKey:cityKey];
+                      [[NSNotificationCenter defaultCenter] postNotificationName:@"NewWeatherData" object:cityKey userInfo:result];
+                  }];
+    }
 }
 
 // MARK: CLLocationManager setup
@@ -126,7 +169,9 @@
     [Wunderground getWeatherFromLatitude:latitude
                             andLongitude:longitude
                           withCompletion:^(NSDictionary *result, NSError *error) {
-                              [[NSNotificationCenter defaultCenter] postNotificationName:@"NewWeatherData" object:self userInfo:result];
+                              //[[WeatherManager sharedManager] addWeather:userInfo.result forKey:@"location"];
+                              [[NSNotificationCenter defaultCenter]
+                               postNotificationName:@"NewWeatherData" object:@"location" userInfo:result];
                           }];
 
 }
