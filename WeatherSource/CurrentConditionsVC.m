@@ -14,6 +14,7 @@
 #import "Model/CurrentConditions.h"
 #import "Model/HourForecast.h"
 #import "Model/DayForecast.h"
+#import "Model/WeatherDataManager.h"
 
 @interface CurrentConditionsVC ()
 // MARK: Outlets
@@ -33,12 +34,12 @@
 
 // MARK: Model
 @property (nonatomic, strong) CurrentConditions *currentConditions;
-@property (nonatomic, strong) NSMutableArray<HourForecast *> *hourlyForecast;
-@property (nonatomic, strong) NSMutableArray<DayForecast *> *extendedForecast;
+@property (nonatomic, strong) NSArray<HourForecast *> *hourlyForecast;
+@property (nonatomic, strong) NSArray<DayForecast *> *extendedForecast;
 @property (nonatomic, strong) DayForecast *todayForecast;
 @end
 
-static const int NumberOfHourlyForecasts = 12;
+//static const int NumberOfHourlyForecasts = 12;
 
 @implementation CurrentConditionsVC 
 
@@ -50,7 +51,7 @@ static const int NumberOfHourlyForecasts = 12;
     self.extendedForecast = [[NSMutableArray alloc] init];
     [self.extendedForecastTableView registerNib:[UINib nibWithNibName:@"OutlookTableViewCell" bundle:nil] forCellReuseIdentifier:@"Outlook Cell"];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewWeatherData:) name:@"NewWeatherData" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewWeatherData:) name:@"WeatherDataReady" object:[WeatherDataManager sharedManager].activeCityKey];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -60,10 +61,18 @@ static const int NumberOfHourlyForecasts = 12;
 
 // MARK: Notification handler
 -(void) receiveNewWeatherData:(NSNotification *)notification {
-    
-    self.currentConditions = [[CurrentConditions alloc] initWithData:notification.userInfo];
-    [self setupHourly:notification.userInfo];
-    [self setupExtended:notification.userInfo];
+    NSLog(@"VC can look for weather data, object = %@", notification.object);
+    if (![notification.object isEqualToString:[WeatherDataManager sharedManager].activeCityKey]) {
+        NSLog(@"not the city we're looking for!");
+        return;
+    }
+ //   self.currentConditions = [[CurrentConditions alloc] initWithData:notification.userInfo];
+ //   [self setupHourly:notification.userInfo];
+ //   [self setupExtended:notification.userInfo];
+    self.currentConditions = [[WeatherDataManager sharedManager] getActiveCurrentConditions];
+    self.hourlyForecast = [[WeatherDataManager sharedManager] getActiveHourly];
+    self.extendedForecast = [[WeatherDataManager sharedManager] getActiveForecast];
+    self.todayForecast = [[WeatherDataManager sharedManager] getActiveTodayForecast];
     //NSLog(@"%@", [notification.userInfo valueForKeyPath:@"forecast.simpleforecast.forecastday"]);
     dispatch_async(dispatch_get_main_queue(), ^{
         [self refreshUI];
@@ -71,6 +80,7 @@ static const int NumberOfHourlyForecasts = 12;
 }
 
 // MARK: Update Model
+/*
 -(void)setupHourly:(NSDictionary *)dict {
     [self.hourlyForecast removeAllObjects];
     NSArray *rawHours = dict[WUNDERGROUND_HOURLY_KEY];
@@ -90,7 +100,7 @@ static const int NumberOfHourlyForecasts = 12;
         [self.extendedForecast addObject:dayForecast];
     }
 }
-
+*/
 // MARK: Update UI
 -(void)refreshUI {
     [self updateCC];

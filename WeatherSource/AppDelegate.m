@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <CoreLocation/CoreLocation.h>
 #import "Model/Wunderground.h"
+#import "Model/WeatherDataManager.h"
 
 @interface AppDelegate () <CLLocationManagerDelegate>
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -61,21 +62,34 @@
                                                     selector:@selector(getQuickLocationUpdate)
                                                     userInfo: nil repeats:YES];
     }
-    
+    // load the last city we were looking at, if any
+    NSString *lastCityViewed = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastCityViewed"];
+    if (!lastCityViewed) {
+        if (canUseLocation) {
+            lastCityViewed = @"location";
+        }
+        else {
+            lastCityViewed = @"Cambridge/MA";
+        }
+    }
+    //TODO not a fan of this bit!
+    [WeatherDataManager sharedManager].activeCityKey = lastCityViewed;
+     
+    BOOL loadLastCity = ![lastCityViewed isEqualToString:@"location"];
     // load any saved cities
     NSArray *savedCities = [self loadFavoriteCities];
     if ([savedCities count] > 0) {
         for (NSString *savedCity in savedCities) {
+            if ([savedCity isEqualToString:lastCityViewed]) {
+                loadLastCity = false;
+            }
             [self getWeatherInfoForCityFromKey:savedCity];
         }
     }
-    // load the last city we were looking at, if any
-    NSString *lastCityViewed = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastCityViewed"];
-    if (!lastCityViewed  && !canUseLocation) {
-        lastCityViewed = @"Cambridge/MA";
+
+    if (loadLastCity) {
+        [self getWeatherInfoForCityFromKey:lastCityViewed];
     }
-    [self getWeatherInfoForCityFromKey:lastCityViewed];
-    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
