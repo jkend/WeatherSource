@@ -52,6 +52,8 @@
     [self.extendedForecastTableView registerNib:[UINib nibWithNibName:@"OutlookTableViewCell" bundle:nil] forCellReuseIdentifier:@"Outlook Cell"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewWeatherData:) name:@"WeatherDataReady" object:[WeatherDataManager sharedManager].activeCityKey];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeWeatherData:) name:@"LocationChanged" object:[WeatherDataManager sharedManager].activeCityKey];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -66,9 +68,18 @@
         NSLog(@"not the city we're looking for!");
         return;
     }
- //   self.currentConditions = [[CurrentConditions alloc] initWithData:notification.userInfo];
- //   [self setupHourly:notification.userInfo];
- //   [self setupExtended:notification.userInfo];
+    [self refreshWeatherData];
+
+}
+
+-(void) changeWeatherData:(NSNotification *)notification {
+    NSLog(@"changeWeatherData");
+    [self refreshWeatherData];
+}
+
+// MARK: Update our data
+-(void)refreshWeatherData {
+    NSLog(@"refreshing weather data");
     self.currentConditions = [[WeatherDataManager sharedManager] getActiveCurrentConditions];
     self.hourlyForecast = [[WeatherDataManager sharedManager] getActiveHourly];
     self.extendedForecast = [[WeatherDataManager sharedManager] getActiveForecast];
@@ -79,28 +90,7 @@
     });
 }
 
-// MARK: Update Model
-/*
--(void)setupHourly:(NSDictionary *)dict {
-    [self.hourlyForecast removeAllObjects];
-    NSArray *rawHours = dict[WUNDERGROUND_HOURLY_KEY];
-    for (int hr = 0; hr < NumberOfHourlyForecasts; hr++) {
-        HourForecast *hourForecast = [[HourForecast alloc] initWithData:rawHours[hr]];
-        [self.hourlyForecast addObject:hourForecast];
-    }
-}
 
--(void)setupExtended:(NSDictionary *)dict {
-    [self.extendedForecast removeAllObjects];
-    NSArray *rawDays = [dict valueForKeyPath:WUNDERGROUND_EXTENDED_PATH];
-    self.todayForecast = [[DayForecast alloc] initWithData:[rawDays firstObject]];
-    for (int dInd = 1; dInd < [rawDays count]; dInd++) {
-        NSDictionary *dict = rawDays[dInd];
-        DayForecast *dayForecast = [[DayForecast alloc] initWithData:dict];
-        [self.extendedForecast addObject:dayForecast];
-    }
-}
-*/
 // MARK: Update UI
 -(void)refreshUI {
     [self updateCC];
