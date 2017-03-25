@@ -28,6 +28,19 @@ static const int NumberOfHourlyForecasts = 12;
     return _allCities;
 }
 
+-(void)setActiveCityKey:(NSString *)activeCityKey {
+    NSLog(@"setting activeKey, newval = %@ oldval = %@", activeCityKey, _activeCityKey);
+    NSString *oldKey = _activeCityKey;
+    _activeCityKey = activeCityKey;
+    if (oldKey) {
+        // We've been initialized before, now we're changing
+        // TODO Need to test if we're a "known" city already
+        NSLog(@"updating activeKey. posting notification");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationChanged" object:_activeCityKey userInfo:nil];
+    }
+    
+}
+
 // MARK: Returning the Singleton
 + (instancetype)sharedManager {
     static WeatherDataManager *sharedInstance = nil;
@@ -43,6 +56,8 @@ static const int NumberOfHourlyForecasts = 12;
 // MARK: Weather for the active city
 // And "active" here means, the one being displayed in the main view controller
 - (CurrentConditions *)getActiveCurrentConditions {
+    NSLog(@"active current conditions, key=%@", self.activeCityKey);
+    NSLog(@"%@", [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.current", self.activeCityKey]]);
     return [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.current", self.activeCityKey]];
 }
 - (NSArray<DayForecast *> *) getActiveForecast {
