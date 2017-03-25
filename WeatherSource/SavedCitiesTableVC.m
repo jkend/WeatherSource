@@ -2,13 +2,14 @@
 //  SavedCitiesTableVC.m
 //  WeatherSource
 //
-//  Created by Tom Lawrence on 3/24/17.
+//  Created by Joy Kendall on 3/24/17.
 //  Copyright © 2017 Joy. All rights reserved.
 //
 
 #import "SavedCitiesTableVC.h"
 #import "Model/WeatherDataManager.h"
 #import "CityTableViewCell/CityTableViewCell.h"
+#import "Model/CurrentConditions.h"
 
 @interface SavedCitiesTableVC ()
 
@@ -26,11 +27,6 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -41,17 +37,25 @@
     return [[WeatherDataManager sharedManager] getSavedCitiesCount];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CityCell" forIndexPath:indexPath];
     // Dictionaries can be a pain
     NSArray *cities = [[WeatherDataManager sharedManager] getSavedCities];
     NSString *cityKey = cities[indexPath.row];
+    cell.myKey = cityKey;
     cell.cityConditions = [[WeatherDataManager sharedManager] getCurrentConditionsForCity:cityKey];
     
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    CityTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+
+    WeatherDataManager *wdm = [WeatherDataManager sharedManager];
+    wdm.activeCityKey = cell.myKey;
+    
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -84,16 +88,6 @@
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
 */
 
