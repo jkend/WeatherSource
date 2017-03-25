@@ -11,4 +11,5 @@
 
 @interface CityTableViewCell : UITableViewCell
 @property (nonatomic, strong) CurrentConditions *cityConditions;
+@property (nonatomic, strong) NSString *myKey;
 @end
