@@ -39,16 +39,14 @@
 @property (nonatomic, strong) DayForecast *todayForecast;
 @end
 
-//static const int NumberOfHourlyForecasts = 12;
-
 @implementation CurrentConditionsVC 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Was trying to use this constraint to get the scrollview to scroll, but no luck so far!
     self.tvHeightConstraint = [NSLayoutConstraint constraintWithItem:self.extendedForecastTableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:0];
-    self.hourlyForecast = [[NSMutableArray alloc] init];
-    self.extendedForecast = [[NSMutableArray alloc] init];
+    //self.hourlyForecast = [[NSMutableArray alloc] init];
+    //self.extendedForecast = [[NSMutableArray alloc] init];
     [self.extendedForecastTableView registerNib:[UINib nibWithNibName:@"OutlookTableViewCell" bundle:nil] forCellReuseIdentifier:@"Outlook Cell"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewWeatherData:) name:@"WeatherDataReady" object:[WeatherDataManager sharedManager].activeCityKey];
@@ -56,12 +54,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeWeatherData:) name:@"LocationChanged" object:[WeatherDataManager sharedManager].activeCityKey];
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-}
-
-// MARK: Notification handler
+// MARK: Notification handlers
 -(void) receiveNewWeatherData:(NSNotification *)notification {
     NSLog(@"VC can look for weather data, object = %@", notification.object);
     if (![notification.object isEqualToString:[WeatherDataManager sharedManager].activeCityKey]) {
@@ -69,7 +62,6 @@
         return;
     }
     [self refreshWeatherData];
-
 }
 
 -(void) changeWeatherData:(NSNotification *)notification {
@@ -114,8 +106,7 @@
 -(void) updateHourly {
     [self.hourlyScrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     int scrollViewWidth = 0;
-    //CGRect svFrame = self.hourlyScrollView.frame;
-    //NSLog(@"scrollview frame: %f %f %f %f", svFrame.origin.x, svFrame.origin.y, svFrame.size.width, svFrame.size.height);
+
     for (HourForecast *hour in self.hourlyForecast) {
         CGRect frameRect = CGRectMake(0, 0, 0.7 * self.hourlyScrollView.frame.size.height, self.hourlyScrollView.frame.size.height);
         
@@ -146,9 +137,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     OutlookTableViewCell *cell = [self.extendedForecastTableView dequeueReusableCellWithIdentifier:@"Outlook Cell"];
-    if (!cell) {
-        
-    }
     cell.dayLabel.text = self.extendedForecast[indexPath.row].day;
     cell.highLabel.text = self.extendedForecast[indexPath.row].highTemp;
     cell.lowLabel.text = self.extendedForecast[indexPath.row].lowTemp;
