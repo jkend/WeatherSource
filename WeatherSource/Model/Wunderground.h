@@ -32,6 +32,8 @@
 #define WUNDERGROUND_EXTENDED_LOWTEMP_PATH      @"low.fahrenheit"
 #define WUNDERGROUND_EXTENDED_ICON_PATH         @"icon_url"
 
+#define WUNDERGROUND_AUTOCOMPLETE_RESULTS       @"RESULTS"
+
 @interface Wunderground : NSObject
 
 +(void) getWeather:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion;
