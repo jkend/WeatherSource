@@ -72,7 +72,7 @@
             lastCityViewed = @"Cambridge/MA";
         }
     }
-    //TODO not a fan of this bit!
+    
     [WeatherDataManager sharedManager].activeCityKey = lastCityViewed;
      
     BOOL loadLastCity = ![lastCityViewed isEqualToString:@"location"];
@@ -102,14 +102,21 @@
     NSArray *favCities = [defaults objectForKey:@"favoriteCities"];
     if (!favCities) {
         // just for dev!
-        return @[@"Seattle/WA", @"New_York/NY", @"Cambridge/MA"];
+        return @[@"Seattle/WA"];
     }
     return favCities;
 }
 
+-(void)saveFavoriteCities {
+    NSArray *favCities = [[WeatherDataManager sharedManager] getSavedCities];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:favCities forKey:@"favoriteCities"];
+    [defaults synchronize];
+}
+
 -(void)saveLastCityViewed {
-    // NSString *cityViewed = [[WeatherManager sharedManager] activeCityKey];
-    // [[NSUserDefaults standardDefaults] setObject:activeCityKey forKey:@"lastCityViewed"];
+     NSString *cityViewed = [[WeatherDataManager sharedManager] activeCityKey];
+     [[NSUserDefaults standardUserDefaults] setObject:cityViewed forKey:@"lastCityViewed"];
 }
 
 -(void)cityAndStateFromKey:(NSString *)key toCity:(NSString **)city andState:(NSString **)state {
