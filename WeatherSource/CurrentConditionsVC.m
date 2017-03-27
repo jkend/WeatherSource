@@ -49,9 +49,9 @@
     //self.extendedForecast = [[NSMutableArray alloc] init];
     [self.extendedForecastTableView registerNib:[UINib nibWithNibName:@"OutlookTableViewCell" bundle:nil] forCellReuseIdentifier:@"Outlook Cell"];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewWeatherData:) name:@"WeatherDataReady" object:[WeatherDataManager sharedManager].activeCityKey];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewWeatherData:) name:@"WeatherDataReady" object:nil];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeWeatherData:) name:@"LocationChanged" object:[WeatherDataManager sharedManager].activeCityKey];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeWeatherData:) name:@"LocationChanged" object:nil];
 }
 
 // MARK: Notification handlers
@@ -73,6 +73,7 @@
 -(void)refreshWeatherData {
     NSLog(@"refreshing weather data");
     self.currentConditions = [[WeatherDataManager sharedManager] getActiveCurrentConditions];
+    NSLog(@"Current conditions: %@", self.currentConditions);
     self.hourlyForecast = [[WeatherDataManager sharedManager] getActiveHourly];
     self.extendedForecast = [[WeatherDataManager sharedManager] getActiveForecast];
     self.todayForecast = [[WeatherDataManager sharedManager] getActiveTodayForecast];
