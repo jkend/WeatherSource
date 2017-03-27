@@ -35,8 +35,18 @@ static const int NumberOfHourlyForecasts = 12;
     if (oldKey) {
         // We've been initialized before, now we're changing
         // TODO Need to test if we're a "known" city already
-        NSLog(@"updating activeKey. posting notification");
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationChanged" object:_activeCityKey userInfo:nil];
+        if (self.allCities[_activeCityKey]) {
+            NSLog(@"updating activeKey. posting notification");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LocationChanged" object:_activeCityKey userInfo:nil];
+        }
+        else {
+            NSLog(@"New place, getting data");
+
+            [Wunderground getWeatherFromZMW:_activeCityKey
+                                  withCompletion:^(NSDictionary *result, NSError *error) {
+                                      [[NSNotificationCenter defaultCenter]
+                                       postNotificationName:@"NewWeatherData" object:self.activeCityKey userInfo:result];
+                                  }];        }
     }
     
 }
@@ -57,18 +67,23 @@ static const int NumberOfHourlyForecasts = 12;
 // And "active" here means, the one being displayed in the main view controller
 - (CurrentConditions *)getActiveCurrentConditions {
     NSLog(@"active current conditions, key=%@", self.activeCityKey);
-    NSLog(@"%@", [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.current", self.activeCityKey]]);
-    return [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.current", self.activeCityKey]];
+    NSDictionary *cityDict = self.allCities[self.activeCityKey];
+    CurrentConditions *cc = cityDict[@"current"];
+    NSLog(@"%@", cc);
+    return cc;
 }
 - (NSArray<DayForecast *> *) getActiveForecast {
-    return [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.forecast", self.activeCityKey]];
+    NSDictionary *cityDict = self.allCities[self.activeCityKey];
+    return cityDict[@"forecast"];
 }
 - (NSArray<HourForecast *> *) getActiveHourly {
-    return [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.hourly", self.activeCityKey]];
+    NSDictionary *cityDict = self.allCities[self.activeCityKey];
+    return cityDict[@"hourly"];
 }
 
 - (DayForecast *) getActiveTodayForecast {
-    return [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.today", self.activeCityKey]] ;
+    NSDictionary *cityDict = self.allCities[self.activeCityKey];
+    return cityDict[@"today"];
 }
 
 - (NSUInteger)getSavedCitiesCount {
@@ -80,7 +95,8 @@ static const int NumberOfHourlyForecasts = 12;
 }
 
 - (CurrentConditions *)getCurrentConditionsForCity:(NSString *)key {
-    return [self.allCities valueForKeyPath:[NSString stringWithFormat:@"%@.current", key]];
+    NSDictionary *cityDict = self.allCities[key];
+    return cityDict[@"current"];
 }
 
 // MARK: NSNotification handler
@@ -113,7 +129,8 @@ static const int NumberOfHourlyForecasts = 12;
     cityDict[@"today"] = todayForecast;
     
     self.allCities[key] = cityDict;
-    
+    NSLog(@"Put in new weather data!");
+    NSLog(@"%@", cityDict);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"WeatherDataReady" object:key userInfo:nil];
 
 }
