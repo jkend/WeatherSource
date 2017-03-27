@@ -38,4 +38,9 @@
     return self;
     
 }
+
+- (NSString *)description {
+    NSString *des = [NSString stringWithFormat:@"city: %@, temperature: %@, weather: %@, icon: %@", self.city, self.temperature, self.weatherDescription, self.iconURLString];
+    return des;
+}
 @end
