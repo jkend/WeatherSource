@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CityAutocompleteTableVC : UITableViewController <UISearchBarDelegate, UISearchResultsUpdating>
+@interface CityAutocompleteTableVC : UITableViewController <UISearchBarDelegate>
 
 @end
