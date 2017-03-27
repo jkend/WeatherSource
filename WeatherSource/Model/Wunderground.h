@@ -7,6 +7,7 @@
 //
 
 #define WUNDERGROUND_BASE_URL                   @"http://api.wunderground.com/api/"
+#define WUNDERGROUND_AUTOCOMPLETE_URL           @"http://autocomplete.wunderground.com/aq?query="
 #define WUNDERGROUND_QUERY_CURRENT_CONDITION    @"/conditions/q"
 #define WUNDERGROUND_QUERY_HOURLY_FORECAST      @"/hourly/q"
 #define WUNDERGROUND_QUERY_EXTENDED_FORECAST    @"/forecast/q"
@@ -35,6 +36,9 @@
 
 +(void) getWeather:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 +(void) getWeatherFromLatitude:(double)latitude andLongitude:(double)longitude withCompletion:(void (^)(NSDictionary *, NSError *))completion;
++(void) getWeatherFromZMW:(NSString *)zmwQueryString withCompletion:(void (^)(NSDictionary *, NSError *))completion;
+
++(void)getAutoCompletions:(NSString *)partialCityString withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 
 +(void) getCurrentConditions:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion;
 +(void) getHourlyForecast:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion;

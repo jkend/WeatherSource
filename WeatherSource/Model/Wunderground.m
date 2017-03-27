@@ -29,6 +29,11 @@
     [self getJSonResponse:queryString completion:completion];
 }
 
++(void) getWeatherFromZMW:(NSString *)zmwQueryString withCompletion:(void (^)(NSDictionary *, NSError *))completion {
+    NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%@.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_CC_HOURLY_EXTENDED, zmwQueryString ];
+    [self getJSonResponse:queryString completion:completion];
+}
+
 // MARK: methods specifying single feature
 +(void) getCurrentConditions:(NSString *)ofCity inState:(NSString *)state withCompletion:(void (^)(NSDictionary *, NSError *))completion {
     //NSLog(@"In getCurrentConditions");
@@ -50,6 +55,15 @@
     NSString *queryString = [NSString stringWithFormat:@"%@%@%@/%@/%@.json", WUNDERGROUND_BASE_URL, WundergroundAPIKey, WUNDERGROUND_QUERY_EXTENDED_FORECAST, state, ofCity ];
     
     [self getJSonResponse:queryString completion:completion];
+}
+
++(void)getAutoCompletions:(NSString *)partialCityString withCompletion:(void (^)(NSDictionary *, NSError *))completion {
+    //URL encode the partial string
+    NSString *encString = [partialCityString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+    NSString *queryString = [NSString stringWithFormat:@"%@%@", WUNDERGROUND_AUTOCOMPLETE_URL, encString ];
+    
+    [self getJSonResponse:queryString completion:completion];
+    
 }
 
 // MARK: Send the query, handle response
