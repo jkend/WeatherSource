@@ -30,22 +30,22 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="CwB-Ft-eue">
-                                                <rect key="frame" x="136" y="50" width="102" height="146"/>
+                                                <rect key="frame" x="147.5" y="50" width="79.5" height="146"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3AE-CV-lD1">
-                                                        <rect key="frame" x="26.5" y="0.0" width="49.5" height="36"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="----" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3AE-CV-lD1">
+                                                        <rect key="frame" x="18" y="0.0" width="44" height="36"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="28"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="37°" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiy-D7-btm">
-                                                        <rect key="frame" x="0.0" y="38" width="102" height="86"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iiy-D7-btm">
+                                                        <rect key="frame" x="9" y="38" width="61.5" height="86"/>
                                                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="72"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="conditions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5oJ-69-0qx">
-                                                        <rect key="frame" x="11.5" y="126" width="79.5" height="20"/>
+                                                        <rect key="frame" x="0.0" y="126" width="79.5" height="20"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -187,18 +187,18 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WXr-Ca-OjZ">
+                                            <rect key="frame" x="241" y="10" width="56.5" height="56.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="WXr-Ca-OjZ" secondAttribute="height" multiplier="1:1" id="LqR-BV-cif"/>
+                                            </constraints>
+                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3qL-al-pvb">
                                             <rect key="frame" x="323.5" y="13.5" width="43.5" height="48.5"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="41"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WXr-Ca-OjZ">
-                                            <rect key="frame" x="241.5" y="10" width="56.5" height="56.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="WXr-Ca-OjZ" secondAttribute="height" multiplier="1:1" id="LqR-BV-cif"/>
-                                            </constraints>
-                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="3qL-al-pvb" secondAttribute="trailing" id="Fnx-zb-siw"/>
@@ -276,7 +276,6 @@
         <!--Navigation Controller-->
         <scene sceneID="yK2-ZI-guN">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oU4-7V-4zZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" toolbarHidden="NO" id="pzb-4X-aAM" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="sL1-HZ-MS8">
@@ -292,6 +291,7 @@
                         <segue destination="jkB-PK-xIj" kind="relationship" relationship="rootViewController" id="fPa-Bv-OgC"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oU4-7V-4zZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2020" y="138.98050974512745"/>
         </scene>
