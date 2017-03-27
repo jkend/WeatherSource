@@ -26,9 +26,12 @@
     self = [super init];
     if (self) {
         self.city = [dict valueForKeyPath:WUNDERGROUND_CC_CITY_PATH];
-        
         // Careful, some of this data is NSNumber (as opposed to NSString)
-        self.temperature =  [dict valueForKeyPath:WUNDERGROUND_CC_TEMP_PATH];
+        // Here, let's round the temp to the nearest whole number (the decimal
+        // part of a degree isn't that interesting).
+        NSString *temp = [dict valueForKeyPath:WUNDERGROUND_CC_TEMP_PATH];
+        self.temperature =  [NSString stringWithFormat:@"%@", @(round([temp doubleValue]))];
+        
         self.windSpeed = [dict valueForKeyPath:WUNDERGROUND_CC_WIND_SPEED_PATH];
         self.windDirection = [dict valueForKeyPath:WUNDERGROUND_CC_WIND_DIRECTION_PATH];
         self.humidity = [dict valueForKeyPath:WUNDERGROUND_CC_HUMIDITY_PATH];
